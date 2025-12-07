@@ -9,8 +9,10 @@ origins = [
     "http://localhost:3000",
     "http://localhost:5173", # Common vite port
     "http://localhost:8080", # Actual frontend dev server port
+    "http://localhost:8081", # Vite fallback port when 8080 is in use
     "http://127.0.0.1:5173",
     "http://127.0.0.1:8080",
+    "http://127.0.0.1:8081",
 ]
 
 app.add_middleware(
