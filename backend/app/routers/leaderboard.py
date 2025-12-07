@@ -9,7 +9,9 @@ router = APIRouter(prefix="/leaderboard", tags=["leaderboard"])
 @router.get("", response_model=dict)
 async def get_leaderboard(mode: Optional[str] = Query(None, enum=["walls", "pass-through"])):
     entries = MockDB.get_leaderboard(mode)
-    return {"success": True, "data": entries}
+    # Sort by score descending
+    sorted_entries = sorted(entries, key=lambda x: x["score"], reverse=True)
+    return {"success": True, "data": sorted_entries}
 
 @router.post("", status_code=201)
 async def submit_score(submission: ScoreSubmission):
