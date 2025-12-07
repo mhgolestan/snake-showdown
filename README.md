@@ -47,11 +47,15 @@ npm run dev
 
 ## Testing
 
+> **Note**: Frontend integration tests require the backend to be running on port 8000.  
+> Start the backend with `make dev-backend` in another terminal before running `make test`.
+
 ```bash
 # Using Make
-make test              # All tests
+make test              # All tests (requires backend running)
 make test-backend      # Backend only
-make test-frontend     # Frontend only
+make test-frontend     # Frontend only (requires backend running)
+make test-unit         # Unit tests only (no backend required)
 
 # Using npm/uv directly
 cd frontend && npm test

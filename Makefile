@@ -10,9 +10,10 @@ help:
 	@echo "  make dev-frontend     - Run frontend only"
 	@echo ""
 	@echo "Testing:"
-	@echo "  make test             - Run all tests (backend + frontend)"
+	@echo "  make test             - Run all tests (backend + frontend, requires backend running)"
 	@echo "  make test-backend     - Run backend tests only"
-	@echo "  make test-frontend    - Run frontend tests only"
+	@echo "  make test-frontend    - Run frontend tests only (requires backend running)"
+	@echo "  make test-unit        - Run unit tests only (no backend required)"
 	@echo ""
 	@echo "Setup:"
 	@echo "  make install          - Install all dependencies"
@@ -32,15 +33,25 @@ dev-frontend:
 	@cd frontend && npm run dev
 
 # Testing commands
-test: test-backend test-frontend
+test:
+	@echo "⚠️  Note: Integration tests require backend to be running on port 8000"
+	@echo "Run 'make dev-backend' in another terminal first, or use 'make test-unit' for unit tests only"
+	@echo ""
+	@$(MAKE) test-backend
+	@$(MAKE) test-frontend
 
 test-backend:
 	@echo "Running backend tests..."
 	@cd backend && uv run pytest
 
 test-frontend:
-	@echo "Running frontend tests..."
+	@echo "Running frontend tests (requires backend on port 8000)..."
 	@cd frontend && npm test -- --run
+
+test-unit:
+	@echo "Running unit tests only (no backend required)..."
+	@cd backend && uv run pytest
+	@cd frontend && npm test -- --run src/game/ src/components/
 
 # Setup commands
 install:
