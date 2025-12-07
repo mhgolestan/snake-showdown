@@ -168,8 +168,8 @@ describe('Game Logic', () => {
     });
 
     it('should move snake in current direction', () => {
-      const state: GameState = { 
-        ...getInitialState('walls'), 
+      const state: GameState = {
+        ...getInitialState('walls'),
         isPaused: false,
         snake: [{ x: 10, y: 10 }, { x: 9, y: 10 }, { x: 8, y: 10 }],
       };
@@ -225,7 +225,7 @@ describe('Game Logic', () => {
           { x: 4, y: 4 },
           { x: 4, y: 5 },
         ],
-        direction: 'LEFT',
+        direction: 'UP',
       };
       const newState = moveSnake(state);
       expect(newState.isGameOver).toBe(true);
