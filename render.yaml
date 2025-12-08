@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: snake-showdown
+    runtime: docker
+    region: oregon
+    plan: free
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: snake-db
+          property: connectionString
+      - key: PYTHONUNBUFFERED
+        value: 1
+      - key: PORT
+        value: 8000
+
+  - type: psql
+    name: snake-db
+    region: oregon
+    plan: free
+    databaseName: snake_showdown
+    user: snakegame
+
+databases:
+  - name: snake-db
+    plan: free
