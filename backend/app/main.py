@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, leaderboard, players
+from app.database import init_db
 
 app = FastAPI(title="Snake Showdown API", version="1.0.0")
 
@@ -30,7 +31,8 @@ app.include_router(players.router)
 
 @app.on_event("startup")
 async def startup_event():
-    """Populate database with fake data on startup."""
+    """Initialize database and populate with fake data on startup."""
+    init_db()
     from app.seeder import populate_fake_data
     populate_fake_data()
 
