@@ -14,12 +14,7 @@ services:
       - key: PORT
         value: 8000
 
-  - type: psql
-    name: snake-db
-    region: oregon
-    plan: free
-    databaseName: snake_showdown
-    user: snakegame
+
 
 databases:
   - name: snake-db
