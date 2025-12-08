@@ -1,7 +1,9 @@
 import { User, LeaderboardEntry, ActivePlayer, AuthResponse, ApiResponse, GameMode } from '@/types/game';
 
 // API Configuration
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+// API Configuration
+const isProd = import.meta.env.PROD;
+const API_URL = import.meta.env.VITE_API_URL ?? (isProd ? '' : 'http://localhost:8000');
 
 // HTTP Client utility
 class ApiClient {
