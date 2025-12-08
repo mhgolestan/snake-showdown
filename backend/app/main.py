@@ -1,9 +1,22 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 from app.routers import auth, leaderboard, players
 from app.database import init_db
 
-app = FastAPI(title="Snake Showdown API", version="1.0.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan context manager for startup and shutdown events."""
+    # Startup
+    init_db()
+    from app.seeder import populate_fake_data
+    populate_fake_data()
+    yield
+    # Shutdown (if needed in the future)
+
+
+app = FastAPI(title="Snake Showdown API", version="1.0.0", lifespan=lifespan)
 
 # CORS Configuration
 origins = [
@@ -28,14 +41,6 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(leaderboard.router)
 app.include_router(players.router)
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize database and populate with fake data on startup."""
-    init_db()
-    from app.seeder import populate_fake_data
-    populate_fake_data()
-
 
 @app.get("/")
 async def root():

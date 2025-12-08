@@ -37,7 +37,7 @@ async def get_player(id: str, db: Session = Depends(get_db)):
     player = db.query(ActivePlayerORM).join(UserORM).filter(ActivePlayerORM.user_id == id).first()
     
     if not player:
-        return {"success": True, "data": None}
+        return {"success": False, "data": None}
     
     return {
         "success": True,
