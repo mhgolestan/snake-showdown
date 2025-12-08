@@ -61,3 +61,32 @@ make test-unit         # Unit tests only (no backend required)
 cd frontend && npm test
 cd backend && uv run pytest
 ```
+
+## Docker Deployment
+
+Deploy the entire application with Docker Compose (PostgreSQL + Backend + Frontend):
+
+```bash
+# Quick start
+cp .env.example .env
+docker-compose build
+docker-compose up -d
+
+# Access at http://localhost
+```
+
+See [DOCKER.md](./DOCKER.md) for complete Docker deployment guide.
+
+## Project Structure
+
+```
+snake-showdown/
+├── backend/           # FastAPI backend
+│   ├── app/          # Application code
+│   ├── tests/        # Unit tests
+│   └── tests_integration/  # Integration tests
+├── frontend/         # React frontend
+│   └── src/          # Source code
+├── docker-compose.yml  # Docker orchestration
+└── DOCKER.md         # Docker deployment guide
+```
