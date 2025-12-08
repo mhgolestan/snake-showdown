@@ -21,10 +21,10 @@ services:
     networks:
       - snake-network
 
-  # FastAPI Backend
+  # FastAPI Backend (Serving Frontend)
   backend:
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
     container_name: snake-backend
     environment:
@@ -39,22 +39,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    networks:
-      - snake-network
-    restart: unless-stopped
-
-  # Nginx Frontend
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        VITE_API_URL: ${VITE_API_URL:-http://localhost/api}
-    container_name: snake-frontend
-    ports:
-      - "8080:80"
-    depends_on:
-      - backend
     networks:
       - snake-network
     restart: unless-stopped
